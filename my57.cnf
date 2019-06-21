@@ -1,0 +1,181 @@
+[client]
+socket                  = /var/run/mysqld/mysql.sock
+
+port                    = 3310
+default-character-set   = utf8
+
+[mysql]
+no-auto-rehash
+show-warnings
+prompt=\u@\h:\d\_\R:\m:\\s>
+pager="less -n -i -F -X -E"
+default-character-set = utf8
+
+[mysqld]
+
+server-id = 1
+#report-host = 
+
+
+user    = mysql
+basedir = /var/lib/mysql
+datadir = /var/lib/mysql/data
+tmpdir  = /var/lib/mysql/tmp
+socket  = /var/run/mysqld/mysql.sock
+
+sql_mode = NO_ENGINE_SUBSTITUTION
+
+port                    = 3310
+character-set-server    = utf8
+collation-server        = utf8_general_ci 
+
+explicit_defaults_for_timestamp = true
+lower_case_table_names  = 1
+autocommit              = 1
+table_definition_cache  = 400
+
+
+default-storage-engine  = InnoDB
+
+default_password_lifetime= 0
+skip-name-resolve
+skip-external-locking
+
+sysdate-is-now
+
+max_connections         = 300
+max_connect_errors      = 1000
+thread_cache_size       = 100
+table_open_cache        = 2048
+wait_timeout            = 28800
+
+max_allowed_packet      = 512M
+max_heap_table_size     = 256M
+tmp_table_size          = 256M
+
+sort_buffer_size        = 8M
+join_buffer_size        = 8M
+read_buffer_size        = 2M
+read_rnd_buffer_size    = 16M
+
+group_concat_max_len    = 102400
+transaction-isolation   = REPEATABLE-READ
+
+## InnoDB Plugin options -----------------------------------------------------------------------
+innodb_stats_on_metadata    = OFF
+innodb_stats_sample_pages   = 8
+innodb_max_dirty_pages_pct  = 90
+innodb_adaptive_hash_index  = 1
+innodb_strict_mode          = 1
+innodb_io_capacity          = 400
+innodb_io_capacity_max      = 400
+innodb_write_io_threads     = 4 
+innodb_read_io_threads      = 4
+# if server has not ROW based replication,
+# please set innodb_autoinc_lock_mode = 1
+innodb_autoinc_lock_mode    = 2
+#innodb_autoinc_lock_mode    = 1
+
+## InnoDB Default options ----------------------------------------------------------------------
+innodb_buffer_pool_size     = 1G
+innodb_log_buffer_size      = 16M
+innodb_buffer_pool_instances =4
+innodb_file_per_table       = 1
+innodb_data_home_dir        = /var/lib/mysql/data
+innodb_data_file_path       = ib_system:100M:autoextend
+innodb_autoextend_increment = 64
+innodb_log_group_home_dir   = /var/lib/mysql/data
+innodb_log_file_size        = 1G
+innodb_log_files_in_group   = 3
+innodb_support_xa           = ON
+innodb_thread_concurrency   = 0
+innodb_lock_wait_timeout    = 60
+
+innodb_flush_log_at_trx_commit  = 1
+innodb_flush_method         = O_DIRECT
+innodb_doublewrite          = 1
+innodb_sync_spin_loops      = 20
+innodb_thread_sleep_delay   = 1000
+
+innodb_numa_interleave=ON
+
+## MyISAM options  -----------------------------------------------------------------------------
+key_buffer_size             = 8M
+bulk_insert_buffer_size     = 8M
+myisam_sort_buffer_size     = 8M
+myisam_max_sort_file_size   = 128M
+ft_min_word_len             = 1
+
+## Loging options ------------------------------------------------------------------------------
+pid-file                    = /var/lib/mysql/logs/mysqld.pid
+
+## Error log
+#log-warnings                = 1
+log_error_verbosity         = 3
+log-error                   = /var/lib/mysql/logs/mysqld
+log_timestamps=SYSTEM
+
+## General log
+general_log                 = 0
+general_log_file            = /var/lib/mysql/logs/general_query.log
+
+# Slow log
+log_slow_admin_statements
+slow-query-log              = 1
+long_query_time             = 1
+slow_query_log_file         = /var/lib/mysql/logs/slow_query.log
+
+## Binary log
+binlog-format               = ROW
+log-bin                     = /var/lib/mysql/logs/binary_log
+binlog_cache_size           = 1M
+max_binlog_size             = 512M
+expire_logs_days            = 3
+log-bin-trust-function-creators = 1
+sync_binlog                 = 1
+log-slave-updates
+
+relay-log                 = /var/lib/mysql/logs/relay_log
+relay_log_purge           = TRUE
+
+## If server is Slave then, uncomment it
+#read_only
+
+gtid-mode                = OFF
+enforce-gtid-consistency = ON
+relay_log_recovery      = ON
+
+## Multi-Source Repllication option -------------------------------------------------------------
+#master_info_repository          = TABLE
+#relay_log_info_repository       = TABLE
+#replicate-do-db                  = ''
+
+
+## FOR SSD/Fusion-IO Setting -------------------------------------------------------------------
+#innodb_page_size            = 4k
+#innodb_flush_neighbors      = 0
+#innodb_io_capacity          = 2000
+#innodb_io_max_capacity      = 2000
+#innodb_read_ahead_threshold = 0
+
+## For InnoDB Cluster
+#sync_binlog = 1
+#binlog_checksum = NONE
+#binlog_format = ROW
+#enforce_gtid_consistency = ON
+#gtid_mode = ON
+#master_info_repository = TABLE
+#relay_log_info_repository = TABLE
+#relay_log_purge = 1
+#relay_log_recovery = 1
+#transaction_write_set_extraction = XXHASH64
+
+#loose-group_replication_transaction_size_limit=150000000
+#loose-group_replication_auto_increment_increment=1
+#loose-group_replication_group_name=""
+#loose-group_replication_local_address= ""
+#loose-group_replication_group_seeds= ""
+#loose-group_replication_start_on_boot= off
+#loose-group_replication_bootstrap_group= off
+#loose-group_replication_single_primary_mode=1
+#loose-group_replication_enforce_update_everywhere_checks=0
